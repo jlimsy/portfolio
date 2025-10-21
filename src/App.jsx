@@ -5,8 +5,20 @@ import "./App.css";
 function App() {
   return (
     <>
-      <div id="layout" className="h-screen w-screen  bg-white">
-        <div id="canvas" className="h-screen w-screen">
+      <div
+        id="layout"
+        className="grid grid-cols-3 grid-rows-3 h-screen w-screen  bg-white relative"
+      >
+        <div className="border-1 border-black"></div>
+        <div className="border-1 border-black"></div>
+        <div className="border-1 border-black"></div>
+        <div className="border-1 border-black"></div>
+        <div className="border-1 border-black"></div>
+        <div className="border-1 border-black"></div>
+        <div className="border-1 border-black"></div>
+        <div className="border-1 border-black"></div>
+        <div className="border-1 border-black"></div>
+        <div id="canvas" className="h-screen w-screen absolute">
           <Canvas className="h-full w-full">
             <ambientLight />
             <mesh>
