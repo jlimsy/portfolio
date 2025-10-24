@@ -1,29 +1,29 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import "./App.css";
+import { Button } from "./components/ui/button";
 
 function App() {
   return (
     <>
-      <div
-        id="layout"
-        className="grid grid-cols-3 grid-rows-3 h-screen w-screen  bg-white relative"
-      >
-        <div className="border-1 border-black"></div>
-        <div className="border-1 border-black"></div>
-        <div className="border-1 border-black"></div>
-        <div className="border-1 border-black"></div>
-        <div className="border-1 border-black"></div>
-        <div className="border-1 border-black"></div>
-        <div className="border-1 border-black"></div>
-        <div className="border-1 border-black"></div>
-        <div className="border-1 border-black"></div>
-        <div id="canvas" className="h-screen w-screen absolute">
-          <Canvas className="h-full w-full">
+      {/* <header className="h-12">111</header> */}
+      <div className="bg-white h-screen w-screen grid grid-cols-[50px_1fr_50px] grid-rows-[50px_1fr_50px]">
+        <div className="border border-black "></div>
+        <div className="border border-black">
+          <Button variant="outline">About Me</Button>
+        </div>
+        <div className="border border-black"></div>{" "}
+        <div className="border border-black"></div>{" "}
+        <div className="border border-black"></div>{" "}
+        <div className="border border-black"></div>{" "}
+        <div className="border border-black"></div>{" "}
+        <div className="border border-black"></div>{" "}
+        <div className="border border-black"></div>
+        <div className="absolute h-screen w-screen ">
+          <Canvas>
             <ambientLight />
             <mesh>
               <boxGeometry />
-              <meshStandardMaterial color="red" />
+              <meshStandardMaterial color="blue" />
             </mesh>
 
             <OrbitControls />
