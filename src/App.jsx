@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect, useRef } from "react";
+import "@hackernoon/pixel-icon-library/fonts/iconfont.css";
+import Canvas3D from "./Canvas3D";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      {/* <header className="h-12">111</header> */}
+      <div className="bg-white h-screen w-screen grid grid-cols-[50px_1fr_50px] grid-rows-[50px_1fr_50px]">
+        <div className="border border-black overflow-hidden bg-orange-600"></div>
+        <div className="border border-black overflow-hidden">
+          <p className="font-semibold text-6xl transition-transform">PORT-</p>
+          {/* <div className="h-full w-full flex items-center justify-center">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => console.log("hello")}
+            >
+              About Me
+            </Button>
+          </div> */}
+        </div>
+        <div className="border border-black bg-orange-600 transition-opacity duration-300 ease-in-out">
+          {" "}
+        </div>{" "}
+        <div className="border border-black overflow-hidden">
+          <p className="rotate-270 text-7xl translate-y-32 font-serif   font-light">
+            JOEY
+          </p>
+        </div>{" "}
+        <div className="border border-black"></div>{" "}
+        <div className="border border-black">
+          {" "}
+          <p className="rotate-90 text-6xl  -translate-x-1 translate-y-96">
+            FOLIO
+          </p>
+        </div>{" "}
+        <div className="border border-black bg-orange-600">
+          <div className="flex h-full w-full items-center justify-center">
+            <i className="hn hn-linkedin"></i>
+          </div>
+        </div>{" "}
+        <div className="border border-black"></div>{" "}
+        <div className="border border-black bg-orange-600">
+          <div className="flex h-full w-full items-center justify-center">
+            <i className="hn hn-github"></i>
+          </div>
+        </div>
+        <div className="absolute h-screen w-screen ">
+          <Canvas3D />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
