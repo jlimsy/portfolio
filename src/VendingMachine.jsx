@@ -10,7 +10,9 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export function VendingMachine(props) {
-  const { nodes, materials } = useGLTF("/vending_machine.glb");
+  const { nodes, materials } = useGLTF(
+    `${import.meta.env.BASE_URL}vending_machine.glb`
+  );
   const { camera } = useThree();
 
   const screenRef = useRef();
@@ -1269,4 +1271,4 @@ export function VendingMachine(props) {
   );
 }
 
-useGLTF.preload("/vending_machine.glb");
+useGLTF.preload(`${import.meta.env.BASE_URL}vending_machine.glb`);
