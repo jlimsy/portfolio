@@ -5,7 +5,12 @@ const projects = [
     description: "",
     skills: ["javascript", "html", "css"],
   },
-  { name: "Retrogram", skills: ["javascript", "html", "css"] },
+  {
+    name: "Retrogram",
+    img: "",
+    description: "",
+    skills: ["javascript", "html", "css"],
+  },
 ];
 
 export default projects;
