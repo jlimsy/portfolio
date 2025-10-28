@@ -1,8 +1,19 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment } from "@react-three/drei";
+import { OrbitControls, Environment, Html } from "@react-three/drei";
 import Model3D from "./Model3D";
+import { useState } from "react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function Canvas3D() {
+  const [openDialog, setOpenDialog] = useState(false);
   // ********** START: Leva GUI **********
 
   // const options = {
@@ -17,6 +28,7 @@ export default function Canvas3D() {
 
   const handleOpenDialog = () => {
     console.log("open dialog");
+    setOpenDialog(true);
   };
 
   return (
@@ -25,6 +37,14 @@ export default function Canvas3D() {
       <Environment preset="sunset" />
 
       <Model3D handleOpenDialog={handleOpenDialog} />
+      <Html>
+        {openDialog && (
+          <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+            <DialogContent>hello</DialogContent>
+          </Dialog>
+        )}
+      </Html>
+
       <OrbitControls />
     </Canvas>
   );
