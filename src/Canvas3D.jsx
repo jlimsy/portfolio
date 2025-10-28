@@ -15,12 +15,16 @@ export default function Canvas3D() {
 
   // ********** END: Leva GUI **********
 
+  const handleOpenDialog = () => {
+    console.log("open dialog");
+  };
+
   return (
     <Canvas>
       <ambientLight />
       <Environment preset="sunset" />
 
-      <Model3D />
+      <Model3D handleOpenDialog={handleOpenDialog} />
       <OrbitControls />
     </Canvas>
   );

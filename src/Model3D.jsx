@@ -6,7 +6,7 @@ import { useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { Edges } from "@react-three/drei";
 
-export default function Model3D() {
+export default function Model3D({ handleOpenDialog }) {
   const pointerRef = useRef();
   const { camera } = useThree();
 
@@ -56,7 +56,7 @@ export default function Model3D() {
 
   return (
     <>
-      <VendingMachine scale={2} />
+      <VendingMachine scale={2} handleOpenDialog={handleOpenDialog} />
       <mesh
         position={[0.7, 0.5, 1]}
         // position={[position.x, position.y, position.z]}

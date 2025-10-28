@@ -11,6 +11,24 @@ const projects = [
     description: "",
     skills: ["javascript", "html", "css"],
   },
+  {
+    name: "babelbites",
+    img: "",
+    description: "",
+    skills: ["javascript", "html", "css"],
+  },
+  {
+    name: "fitcommit",
+    img: "",
+    description: "",
+    skills: ["javascript", "html", "css"],
+  },
+  {
+    name: "Othello",
+    img: "",
+    description: "",
+    skills: ["javascript", "html", "css"],
+  },
 ];
 
 export default projects;
