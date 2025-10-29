@@ -29,12 +29,10 @@ export function VendingMachine(props) {
 
   const material = new THREE.MeshBasicMaterial({
     map: textures[0],
-    transparent: true,
   });
 
   useEffect(() => {
     textures.forEach((tex, i) => {
-      tex.repeat.set(1, 0.5); // scale
       tex.offset.set(0, 0.25); // center
       tex.wrapS = THREE.RepeatWrapping;
       tex.wrapT = THREE.RepeatWrapping;
