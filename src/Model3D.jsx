@@ -6,7 +6,7 @@ import { useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { Edges } from "@react-three/drei";
 
-export default function Model3D({ handleOpenDialog }) {
+export default function Model3D({ ref, handleOpenDialog }) {
   const pointerRef = useRef();
   const { camera } = useThree();
 
@@ -21,8 +21,12 @@ export default function Model3D({ handleOpenDialog }) {
 
       console.log(pointerRef.current.getWorldPosition(targetPos));
     }
-    const offset = new THREE.Vector3(0, 0, 1); // 2 units in front of object
+    const offset = new THREE.Vector3(0, 0, 1);
     const newCamPos = targetPos.clone().add(offset);
+
+    const orbitControls = ref.current;
+
+    console.log(orbitControls);
 
     gsap.to(camera.position, {
       x: newCamPos.x,
@@ -30,7 +34,16 @@ export default function Model3D({ handleOpenDialog }) {
       z: newCamPos.z,
       duration: 1.5,
       ease: "power2.out",
-      onUpdate: () => camera.lookAt(targetPos),
+      onUpdate: () => orbitControls.update(),
+    });
+
+    gsap.to(orbitControls.target, {
+      x: newCamPos.x,
+      y: newCamPos.y,
+      z: newCamPos.z,
+      duration: 1.5,
+      ease: "power2.out",
+      onUpdate: () => orbitControls.update(),
     });
   };
 
