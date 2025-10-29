@@ -24,7 +24,7 @@ export function VendingMachine(props) {
 
   const { handleOpenDialog } = props;
 
-  const svgPaths = ["07_roulette.png"];
+  const svgPaths = ["0.png"];
   const textures = useTexture(svgPaths);
 
   const material = new THREE.MeshBasicMaterial({
