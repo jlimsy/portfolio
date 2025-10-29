@@ -18,25 +18,40 @@ import { useRef, useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export function VendingMachine(props) {
-  const { nodes, materials } = useGLTF(
+  const { scene, nodes, materials } = useGLTF(
     `${import.meta.env.BASE_URL}vending_machine.glb`
   );
 
   const { handleOpenDialog } = props;
 
-  const svgPaths = ["instagram.png"];
-  const textures = useTexture(svgPaths);
+  const imgPaths = [`${import.meta.env.BASE_URL}instagram.png`];
+  const textures = useTexture(imgPaths);
 
   const material = new THREE.MeshBasicMaterial({
-    map: textures[0],
+    color: "red",
+    // map: textures[0],
+    // transparent: true,
+    side: THREE.DoubleSide,
   });
 
   useEffect(() => {
-    textures.forEach((tex, i) => {
-      tex.offset.set(0, 0.25); // center
-      tex.wrapS = THREE.RepeatWrapping;
-      tex.wrapT = THREE.RepeatWrapping;
-      tex.needsUpdate = true;
+    scene.traverse((child) => {
+      if (child.isMesh && child.material === materials.Screen) {
+        console.log("found screen mesh", child, child.material);
+        child.material = material;
+        console.log(child.material, material);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    textures.forEach((texture, i) => {
+      // texture.offset.set(0, 0.25); // center
+      // texture.wrapS = THREE.RepeatWrapping;
+      // texture.wrapT = THREE.RepeatWrapping;
+      texture.flipY = false; // Fix upside-down GLTF UV issue
+      texture.encoding = THREE.sRGBEncoding; // Keep correct color space
+      texture.needsUpdate = true;
     });
   }, [textures]);
 
@@ -96,7 +111,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane.geometry}
+          geometry={nodes.Row01_Plane.geometry}
           material={materials.Plate}
           position={[0.395, 0.579, 0.182]}
           rotation={[-1.309, 0, 0]}
@@ -105,34 +120,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane001.geometry}
-          material={materials.Plate}
-          position={[0.235, 0.579, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane002.geometry}
-          material={materials.Plate}
-          position={[0.079, 0.579, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane003.geometry}
-          material={materials.Plate}
-          position={[-0.081, 0.579, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane004.geometry}
+          geometry={nodes.Row01_Plane004.geometry}
           material={materials.Plate}
           position={[0.395, 0.579, 0.122]}
           rotation={[-1.309, 0, 0]}
@@ -141,34 +129,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane005.geometry}
-          material={materials.Plate}
-          position={[0.235, 0.579, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane006.geometry}
-          material={materials.Plate}
-          position={[0.079, 0.579, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane007.geometry}
-          material={materials.Plate}
-          position={[-0.081, 0.579, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane008.geometry}
+          geometry={nodes.Row01_Plane008.geometry}
           material={materials.Plate}
           position={[0.395, 0.579, 0.062]}
           rotation={[-1.309, 0, 0]}
@@ -177,34 +138,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane009.geometry}
-          material={materials.Plate}
-          position={[0.235, 0.579, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane010.geometry}
-          material={materials.Plate}
-          position={[0.079, 0.579, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane011.geometry}
-          material={materials.Plate}
-          position={[-0.081, 0.579, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane012.geometry}
+          geometry={nodes.Row01_Plane012.geometry}
           material={materials.Plate}
           position={[0.398, 0.579, 0.002]}
           rotation={[-1.309, 0, 0]}
@@ -213,34 +147,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane013.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.581, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane014.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.581, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane015.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.581, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane016.geometry}
+          geometry={nodes.Row01_Plane016.geometry}
           material={materials.Plate}
           position={[0.398, 0.579, -0.058]}
           rotation={[-1.309, 0, 0]}
@@ -249,34 +156,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane017.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.581, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane018.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.581, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane019.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.581, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane020.geometry}
+          geometry={nodes.Row01_Plane020.geometry}
           material={materials.Plate}
           position={[0.398, 0.579, -0.118]}
           rotation={[-1.309, 0, 0]}
@@ -285,34 +165,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane021.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.581, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane022.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.581, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane023.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.581, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane024.geometry}
+          geometry={nodes.Row01_Plane024.geometry}
           material={materials.Plate}
           position={[0.398, 0.579, -0.178]}
           rotation={[-1.309, 0, 0]}
@@ -321,34 +174,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane025.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.581, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane026.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.581, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane027.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.581, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane028.geometry}
+          geometry={nodes.Row01_Plane028.geometry}
           material={materials.Plate}
           position={[0.398, 0.579, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -357,7 +183,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane029.geometry}
+          geometry={nodes.Row02_Plane001.geometry}
+          material={materials.Plate}
+          position={[0.235, 0.579, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row02_Plane005.geometry}
+          material={materials.Plate}
+          position={[0.235, 0.579, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row02_Plane009.geometry}
+          material={materials.Plate}
+          position={[0.235, 0.579, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row02_Plane013.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.581, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row02_Plane017.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.581, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row02_Plane021.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.581, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row02_Plane025.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.581, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row02_Plane029.geometry}
           material={materials.Plate}
           position={[0.237, 0.581, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -366,7 +255,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane030.geometry}
+          geometry={nodes.Row03_Plane002.geometry}
+          material={materials.Plate}
+          position={[0.079, 0.579, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row03_Plane006.geometry}
+          material={materials.Plate}
+          position={[0.079, 0.579, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row03_Plane010.geometry}
+          material={materials.Plate}
+          position={[0.079, 0.579, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row03_Plane014.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.581, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row03_Plane018.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.581, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row03_Plane022.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.581, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row03_Plane026.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.581, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row03_Plane030.geometry}
           material={materials.Plate}
           position={[0.081, 0.581, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -375,7 +327,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane031.geometry}
+          geometry={nodes.Row04_Plane003.geometry}
+          material={materials.Plate}
+          position={[-0.081, 0.579, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row04_Plane007.geometry}
+          material={materials.Plate}
+          position={[-0.081, 0.579, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row04_Plane011.geometry}
+          material={materials.Plate}
+          position={[-0.081, 0.579, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row04_Plane015.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.581, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row04_Plane019.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.581, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row04_Plane023.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.581, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row04_Plane027.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.581, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row04_Plane031.geometry}
           material={materials.Plate}
           position={[-0.079, 0.581, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -384,7 +399,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane032.geometry}
+          geometry={nodes.Row05_Plane032.geometry}
           material={materials.Plate}
           position={[0.395, 0.334, 0.182]}
           rotation={[-1.309, 0, 0]}
@@ -393,34 +408,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane033.geometry}
-          material={materials.Plate}
-          position={[0.235, 0.334, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane034.geometry}
-          material={materials.Plate}
-          position={[0.079, 0.334, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane035.geometry}
-          material={materials.Plate}
-          position={[-0.081, 0.334, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane036.geometry}
+          geometry={nodes.Row05_Plane036.geometry}
           material={materials.Plate}
           position={[0.395, 0.334, 0.122]}
           rotation={[-1.309, 0, 0]}
@@ -429,34 +417,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane037.geometry}
-          material={materials.Plate}
-          position={[0.235, 0.334, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane038.geometry}
-          material={materials.Plate}
-          position={[0.079, 0.334, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane039.geometry}
-          material={materials.Plate}
-          position={[-0.081, 0.334, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane040.geometry}
+          geometry={nodes.Row05_Plane040.geometry}
           material={materials.Plate}
           position={[0.395, 0.334, 0.062]}
           rotation={[-1.309, 0, 0]}
@@ -465,34 +426,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane041.geometry}
-          material={materials.Plate}
-          position={[0.235, 0.334, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane042.geometry}
-          material={materials.Plate}
-          position={[0.079, 0.334, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane043.geometry}
-          material={materials.Plate}
-          position={[-0.081, 0.334, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane044.geometry}
+          geometry={nodes.Row05_Plane044.geometry}
           material={materials.Plate}
           position={[0.398, 0.334, 0.002]}
           rotation={[-1.309, 0, 0]}
@@ -501,34 +435,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane045.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.337, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane046.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.337, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane047.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.337, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane048.geometry}
+          geometry={nodes.Row05_Plane048.geometry}
           material={materials.Plate}
           position={[0.398, 0.334, -0.058]}
           rotation={[-1.309, 0, 0]}
@@ -537,34 +444,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane049.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.337, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane050.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.337, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane051.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.337, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane052.geometry}
+          geometry={nodes.Row05_Plane052.geometry}
           material={materials.Plate}
           position={[0.398, 0.334, -0.118]}
           rotation={[-1.309, 0, 0]}
@@ -573,34 +453,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane053.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.337, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane054.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.337, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane055.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.337, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane056.geometry}
+          geometry={nodes.Row05_Plane056.geometry}
           material={materials.Plate}
           position={[0.398, 0.334, -0.178]}
           rotation={[-1.309, 0, 0]}
@@ -609,34 +462,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane057.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.337, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane058.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.337, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane059.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.337, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane060.geometry}
+          geometry={nodes.Row05_Plane060.geometry}
           material={materials.Plate}
           position={[0.398, 0.334, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -645,7 +471,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane061.geometry}
+          geometry={nodes.Row06_Plane033.geometry}
+          material={materials.Plate}
+          position={[0.235, 0.334, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row06_Plane037.geometry}
+          material={materials.Plate}
+          position={[0.235, 0.334, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row06_Plane041.geometry}
+          material={materials.Plate}
+          position={[0.235, 0.334, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row06_Plane045.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.337, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row06_Plane049.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.337, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row06_Plane053.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.337, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row06_Plane057.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.337, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row06_Plane061.geometry}
           material={materials.Plate}
           position={[0.237, 0.337, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -654,7 +543,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane062.geometry}
+          geometry={nodes.Row07_Plane034.geometry}
+          material={materials.Plate}
+          position={[0.079, 0.334, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row07_Plane038.geometry}
+          material={materials.Plate}
+          position={[0.079, 0.334, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row07_Plane042.geometry}
+          material={materials.Plate}
+          position={[0.079, 0.334, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row07_Plane046.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.337, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row07_Plane050.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.337, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row07_Plane054.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.337, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row07_Plane058.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.337, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row07_Plane062.geometry}
           material={materials.Plate}
           position={[0.081, 0.337, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -663,7 +615,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane063.geometry}
+          geometry={nodes.Row08_Plane035.geometry}
+          material={materials.Plate}
+          position={[-0.081, 0.334, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row08_Plane039.geometry}
+          material={materials.Plate}
+          position={[-0.081, 0.334, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row08_Plane043.geometry}
+          material={materials.Plate}
+          position={[-0.081, 0.334, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row08_Plane047.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.337, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row08_Plane051.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.337, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row08_Plane055.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.337, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row08_Plane059.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.337, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row08_Plane063.geometry}
           material={materials.Plate}
           position={[-0.079, 0.337, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -672,7 +687,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane064.geometry}
+          geometry={nodes.Row09_Plane064.geometry}
           material={materials.Plate}
           position={[0.395, 0.088, 0.182]}
           rotation={[-1.309, 0, 0]}
@@ -681,34 +696,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane065.geometry}
-          material={materials.Plate}
-          position={[0.235, 0.088, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane066.geometry}
-          material={materials.Plate}
-          position={[0.079, 0.088, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane067.geometry}
-          material={materials.Plate}
-          position={[-0.081, 0.088, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane068.geometry}
+          geometry={nodes.Row09_Plane068.geometry}
           material={materials.Plate}
           position={[0.395, 0.088, 0.122]}
           rotation={[-1.309, 0, 0]}
@@ -717,34 +705,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane069.geometry}
-          material={materials.Plate}
-          position={[0.235, 0.088, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane070.geometry}
-          material={materials.Plate}
-          position={[0.079, 0.088, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane071.geometry}
-          material={materials.Plate}
-          position={[-0.081, 0.088, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane072.geometry}
+          geometry={nodes.Row09_Plane072.geometry}
           material={materials.Plate}
           position={[0.395, 0.088, 0.062]}
           rotation={[-1.309, 0, 0]}
@@ -753,34 +714,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane073.geometry}
-          material={materials.Plate}
-          position={[0.235, 0.088, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane074.geometry}
-          material={materials.Plate}
-          position={[0.079, 0.088, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane075.geometry}
-          material={materials.Plate}
-          position={[-0.081, 0.088, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane076.geometry}
+          geometry={nodes.Row09_Plane076.geometry}
           material={materials.Plate}
           position={[0.398, 0.088, 0.002]}
           rotation={[-1.309, 0, 0]}
@@ -789,34 +723,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane077.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.09, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane078.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.09, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane079.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.09, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane080.geometry}
+          geometry={nodes.Row09_Plane080.geometry}
           material={materials.Plate}
           position={[0.398, 0.088, -0.058]}
           rotation={[-1.309, 0, 0]}
@@ -825,34 +732,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane081.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.09, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane082.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.09, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane083.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.09, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane084.geometry}
+          geometry={nodes.Row09_Plane084.geometry}
           material={materials.Plate}
           position={[0.398, 0.088, -0.118]}
           rotation={[-1.309, 0, 0]}
@@ -861,34 +741,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane085.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.09, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane086.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.09, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane087.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.09, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane088.geometry}
+          geometry={nodes.Row09_Plane088.geometry}
           material={materials.Plate}
           position={[0.398, 0.088, -0.178]}
           rotation={[-1.309, 0, 0]}
@@ -897,34 +750,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane089.geometry}
-          material={materials.Plate}
-          position={[0.237, 0.09, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane090.geometry}
-          material={materials.Plate}
-          position={[0.081, 0.09, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane091.geometry}
-          material={materials.Plate}
-          position={[-0.079, 0.09, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane092.geometry}
+          geometry={nodes.Row09_Plane092.geometry}
           material={materials.Plate}
           position={[0.398, 0.088, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -933,7 +759,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane093.geometry}
+          geometry={nodes.Row10_Plane065.geometry}
+          material={materials.Plate}
+          position={[0.235, 0.088, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row10_Plane069.geometry}
+          material={materials.Plate}
+          position={[0.235, 0.088, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row10_Plane073.geometry}
+          material={materials.Plate}
+          position={[0.235, 0.088, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row10_Plane077.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.09, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row10_Plane081.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.09, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row10_Plane085.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.09, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row10_Plane089.geometry}
+          material={materials.Plate}
+          position={[0.237, 0.09, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row10_Plane093.geometry}
           material={materials.Plate}
           position={[0.237, 0.09, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -942,7 +831,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane094.geometry}
+          geometry={nodes.Row11_Plane066.geometry}
+          material={materials.Plate}
+          position={[0.079, 0.088, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row11_Plane070.geometry}
+          material={materials.Plate}
+          position={[0.079, 0.088, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row11_Plane074.geometry}
+          material={materials.Plate}
+          position={[0.079, 0.088, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row11_Plane078.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.09, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row11_Plane082.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.09, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row11_Plane086.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.09, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row11_Plane090.geometry}
+          material={materials.Plate}
+          position={[0.081, 0.09, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row11_Plane094.geometry}
           material={materials.Plate}
           position={[0.081, 0.09, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -951,7 +903,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane095.geometry}
+          geometry={nodes.Row12_Plane067.geometry}
+          material={materials.Plate}
+          position={[-0.081, 0.088, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row12_Plane071.geometry}
+          material={materials.Plate}
+          position={[-0.081, 0.088, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row12_Plane075.geometry}
+          material={materials.Plate}
+          position={[-0.081, 0.088, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row12_Plane079.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.09, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row12_Plane083.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.09, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row12_Plane087.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.09, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row12_Plane091.geometry}
+          material={materials.Plate}
+          position={[-0.079, 0.09, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row12_Plane095.geometry}
           material={materials.Plate}
           position={[-0.079, 0.09, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -960,7 +975,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane096.geometry}
+          geometry={nodes.Row13_Plane096.geometry}
           material={materials.Plate}
           position={[0.395, -0.157, 0.182]}
           rotation={[-1.309, 0, 0]}
@@ -969,34 +984,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane097.geometry}
-          material={materials.Plate}
-          position={[0.235, -0.157, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane098.geometry}
-          material={materials.Plate}
-          position={[0.079, -0.157, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane099.geometry}
-          material={materials.Plate}
-          position={[-0.081, -0.157, 0.182]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane100.geometry}
+          geometry={nodes.Row13_Plane100.geometry}
           material={materials.Plate}
           position={[0.395, -0.157, 0.122]}
           rotation={[-1.309, 0, 0]}
@@ -1005,34 +993,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane101.geometry}
-          material={materials.Plate}
-          position={[0.235, -0.157, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane102.geometry}
-          material={materials.Plate}
-          position={[0.079, -0.157, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane103.geometry}
-          material={materials.Plate}
-          position={[-0.081, -0.157, 0.122]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane104.geometry}
+          geometry={nodes.Row13_Plane104.geometry}
           material={materials.Plate}
           position={[0.395, -0.157, 0.062]}
           rotation={[-1.309, 0, 0]}
@@ -1041,34 +1002,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane105.geometry}
-          material={materials.Plate}
-          position={[0.235, -0.157, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane106.geometry}
-          material={materials.Plate}
-          position={[0.079, -0.157, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane107.geometry}
-          material={materials.Plate}
-          position={[-0.081, -0.157, 0.062]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane108.geometry}
+          geometry={nodes.Row13_Plane108.geometry}
           material={materials.Plate}
           position={[0.398, -0.157, 0.002]}
           rotation={[-1.309, 0, 0]}
@@ -1077,34 +1011,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane109.geometry}
-          material={materials.Plate}
-          position={[0.237, -0.154, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane110.geometry}
-          material={materials.Plate}
-          position={[0.081, -0.154, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane111.geometry}
-          material={materials.Plate}
-          position={[-0.079, -0.154, 0.002]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane112.geometry}
+          geometry={nodes.Row13_Plane112.geometry}
           material={materials.Plate}
           position={[0.398, -0.157, -0.058]}
           rotation={[-1.309, 0, 0]}
@@ -1113,34 +1020,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane113.geometry}
-          material={materials.Plate}
-          position={[0.237, -0.154, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane114.geometry}
-          material={materials.Plate}
-          position={[0.081, -0.154, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane115.geometry}
-          material={materials.Plate}
-          position={[-0.079, -0.154, -0.058]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane116.geometry}
+          geometry={nodes.Row13_Plane116.geometry}
           material={materials.Plate}
           position={[0.398, -0.157, -0.118]}
           rotation={[-1.309, 0, 0]}
@@ -1149,34 +1029,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane117.geometry}
-          material={materials.Plate}
-          position={[0.237, -0.154, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane118.geometry}
-          material={materials.Plate}
-          position={[0.081, -0.154, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane119.geometry}
-          material={materials.Plate}
-          position={[-0.079, -0.154, -0.118]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane120.geometry}
+          geometry={nodes.Row13_Plane120.geometry}
           material={materials.Plate}
           position={[0.398, -0.157, -0.178]}
           rotation={[-1.309, 0, 0]}
@@ -1185,34 +1038,7 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane121.geometry}
-          material={materials.Plate}
-          position={[0.237, -0.154, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane122.geometry}
-          material={materials.Plate}
-          position={[0.081, -0.154, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane123.geometry}
-          material={materials.Plate}
-          position={[-0.079, -0.154, -0.178]}
-          rotation={[-1.309, 0, 0]}
-          scale={[0.5, 1, 0.5]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane124.geometry}
+          geometry={nodes.Row13_Plane124.geometry}
           material={materials.Plate}
           position={[0.398, -0.157, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -1221,7 +1047,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane125.geometry}
+          geometry={nodes.Row14_Plane097.geometry}
+          material={materials.Plate}
+          position={[0.235, -0.157, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row14_Plane101.geometry}
+          material={materials.Plate}
+          position={[0.235, -0.157, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row14_Plane105.geometry}
+          material={materials.Plate}
+          position={[0.235, -0.157, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row14_Plane109.geometry}
+          material={materials.Plate}
+          position={[0.237, -0.154, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row14_Plane113.geometry}
+          material={materials.Plate}
+          position={[0.237, -0.154, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row14_Plane117.geometry}
+          material={materials.Plate}
+          position={[0.237, -0.154, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row14_Plane121.geometry}
+          material={materials.Plate}
+          position={[0.237, -0.154, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row14_Plane125.geometry}
           material={materials.Plate}
           position={[0.237, -0.154, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -1230,7 +1119,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane126.geometry}
+          geometry={nodes.Row15_Plane098.geometry}
+          material={materials.Plate}
+          position={[0.079, -0.157, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row15_Plane102.geometry}
+          material={materials.Plate}
+          position={[0.079, -0.157, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row15_Plane106.geometry}
+          material={materials.Plate}
+          position={[0.079, -0.157, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row15_Plane110.geometry}
+          material={materials.Plate}
+          position={[0.081, -0.154, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row15_Plane114.geometry}
+          material={materials.Plate}
+          position={[0.081, -0.154, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row15_Plane118.geometry}
+          material={materials.Plate}
+          position={[0.081, -0.154, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row15_Plane122.geometry}
+          material={materials.Plate}
+          position={[0.081, -0.154, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row15_Plane126.geometry}
           material={materials.Plate}
           position={[0.081, -0.154, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -1239,7 +1191,70 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane127.geometry}
+          geometry={nodes.Row16_Plane099.geometry}
+          material={materials.Plate}
+          position={[-0.081, -0.157, 0.182]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row16_Plane103.geometry}
+          material={materials.Plate}
+          position={[-0.081, -0.157, 0.122]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row16_Plane107.geometry}
+          material={materials.Plate}
+          position={[-0.081, -0.157, 0.062]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row16_Plane111.geometry}
+          material={materials.Plate}
+          position={[-0.079, -0.154, 0.002]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row16_Plane115.geometry}
+          material={materials.Plate}
+          position={[-0.079, -0.154, -0.058]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row16_Plane119.geometry}
+          material={materials.Plate}
+          position={[-0.079, -0.154, -0.118]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row16_Plane123.geometry}
+          material={materials.Plate}
+          position={[-0.079, -0.154, -0.178]}
+          rotation={[-1.309, 0, 0]}
+          scale={[0.5, 1, 0.5]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Row16_Plane127.geometry}
           material={materials.Plate}
           position={[-0.079, -0.154, -0.238]}
           rotation={[-1.309, 0, 0]}
@@ -1284,197 +1299,194 @@ export function VendingMachine(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cube003.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube003_1.geometry}
+          geometry={nodes.Screen001_1.geometry}
           material={materials.Shelves}
         />
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cube004.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube004_1.geometry}
-          material={materials.Plate}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube010.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube010_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube011.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube011_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube012.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube012_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube013.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube013_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube014.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube014_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube015.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube015_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube016.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube016_1.geometry}
-          material={materials.Plate}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube017.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube017_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube018.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube018_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube019.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube019_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube020.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube020_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube021.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube021_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube022.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube022_1.geometry}
-          material={materials.Shelves}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube023.geometry}
-          // material={materials.Black}
+          geometry={nodes.Screen001_2.geometry}
           material={material}
-          onClick={handleOpenDialog}
         />
-
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cube023_1.geometry}
+          geometry={nodes.Screen002_1.geometry}
           material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen002_2.geometry}
+          material={material}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen003_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen003_2.geometry}
+          material={material}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen004_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen004_2.geometry}
+          material={material}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen005_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen005_2.geometry}
+          material={material}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen006_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen006_2.geometry}
+          material={material}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen007_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen007_2.geometry}
+          material={materials.Screen}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen008_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen008_2.geometry}
+          material={materials.Screen}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen009_1.geometry}
+          material={materials.Plate}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen009_2.geometry}
+          material={materials.Screen}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen010_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen010_2.geometry}
+          material={materials.Screen}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen011_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen011_2.geometry}
+          material={materials.Screen}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen012_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen012_2.geometry}
+          material={materials.Screen}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen013_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen013_2.geometry}
+          material={materials.Screen}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen014_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen014_2.geometry}
+          material={materials.Screen}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen015_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen015_2.geometry}
+          material={materials.Screen}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen016_1.geometry}
+          material={materials.Shelves}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Screen016_2.geometry}
+          material={materials.Screen}
         />
       </group>
     </group>

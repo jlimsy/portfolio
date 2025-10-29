@@ -4,7 +4,7 @@ import { useControls } from "leva";
 import gsap from "gsap";
 import { useThree } from "@react-three/fiber";
 import { use, useEffect, useRef, useState } from "react";
-import { Edges } from "@react-three/drei";
+import { Edges, useTexture } from "@react-three/drei";
 
 export default function Model3D({ ref, handleOpenDialog }) {
   const pointerRef = useRef();
@@ -88,9 +88,15 @@ export default function Model3D({ ref, handleOpenDialog }) {
     });
   }, [pointerRef]);
 
+  // const texture = useTexture(`${import.meta.env.BASE_URL}instagram.png`);
+
   return (
     <>
       <VendingMachine scale={2} handleOpenDialog={handleOpenDialog} />
+      {/* <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+        <planeGeometry args={[2, 2]} />
+        <meshBasicMaterial map={texture} transparent={true} />
+      </mesh> */}
       <mesh
         position={[0.73, 0.5, 1]}
         // position={[position.x, position.y, position.z]}

@@ -1,7 +1,13 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, Html } from "@react-three/drei";
+import {
+  OrbitControls,
+  Environment,
+  Html,
+  useTexture,
+} from "@react-three/drei";
 import Model3D from "./Model3D";
 import { useRef, useState } from "react";
+import * as THREE from "three";
 
 import {
   Dialog,
@@ -10,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/Components/ui/dialog";
 import { Badge } from "@/Components/ui/badge";
 
 export default function Canvas3D() {

@@ -12,6 +12,12 @@ const projects = [
     skills: ["javascript", "html", "css"],
   },
   {
+    name: "catneed",
+    img: "",
+    description: "",
+    skills: ["javascript", "html", "css"],
+  },
+  {
     name: "babelbites",
     img: "",
     description: "",
