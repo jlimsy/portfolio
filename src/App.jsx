@@ -10,7 +10,7 @@ function App() {
       <div className=" bg-white h-screen w-screen grid grid-cols-[50px_1fr_50px] grid-rows-[50px_1fr_50px] z-100 overflow-hidden">
         <div className="border border-black overflow-hidden bg-orange-600"></div>
         <div className="border border-black overflow-hidden">
-          <p className="font-semibold text-6xl">PORT-</p>
+          <p className="font-semibold text-7xl">PORT-</p>
           {/* <div className="h-full w-full flex items-center justify-center">
             <Button
               size="sm"
@@ -25,7 +25,7 @@ function App() {
           {" "}
         </div>{" "}
         <div className="border border-black overflow-hidden">
-          <p className="rotate-270 text-7xl translate-y-32 font-serif font-light">
+          <p className="rotate-270 text-8xl translate-y-42 font-serif font-light">
             JOEY
           </p>
         </div>{" "}
@@ -41,8 +41,8 @@ function App() {
             </p>
           </div>
         </div>{" "}
-        <div className="border border-black">
-          <p className="rotate-90 text-6xl  -translate-x-1 translate-y-96">
+        <div className="border border-black overflow-hidden">
+          <p className="rotate-90 text-7xl  -translate-x-1 translate-y-96">
             FOLIO
           </p>
         </div>{" "}
