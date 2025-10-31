@@ -17,8 +17,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/Components/ui/dialog";
-import { Badge } from "@/Components/ui/badge";
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 
 export default function Canvas3D() {
   const [openDialog, setOpenDialog] = useState(false);
