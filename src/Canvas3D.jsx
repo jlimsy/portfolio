@@ -56,7 +56,7 @@ export default function Canvas3D() {
       <Html>
         {openDialog && (
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogContent className="w-fit bg-primary border border-border text-muted font-mono">
+            <DialogContent className="w-96 bg-primary border border-border text-muted font-mono">
               <DialogHeader>
                 <DialogTitle>{selectedProject.name}</DialogTitle>
               </DialogHeader>
@@ -66,7 +66,7 @@ export default function Canvas3D() {
                 className="w-96 border border-border"
               />
 
-              <div className="w-96">
+              <div className="w-fit">
                 <p> {selectedProject.description}</p>
               </div>
 
