@@ -56,19 +56,27 @@ export default function Canvas3D() {
       <Html>
         {openDialog && (
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogContent>
+            <DialogContent className="w-fit bg-primary border border-border text-muted font-mono">
               <DialogHeader>
                 <DialogTitle>{selectedProject.name}</DialogTitle>
               </DialogHeader>
               <img
                 src={selectedProject.img}
                 alt={selectedProject.name}
-                className="h-48 border border-border"
+                className="w-48 md:w-96 border border-border"
               />
-              {selectedProject.description}
-              <div className="flex gap-1">
+
+              <div className="w-48 md:w-96">
+                <p> {selectedProject.description}</p>
+              </div>
+
+              <div>Skills acquired:</div>
+
+              <div className="flex gap-2">
                 {selectedProject.skills.map((skill) => (
-                  <Badge key={skill}>{skill}</Badge>
+                  <Badge className="bg-orange-600 font-bold" key={skill}>
+                    {skill}
+                  </Badge>
                 ))}
               </div>
             </DialogContent>
