@@ -7,7 +7,7 @@ function App() {
     <>
       {/* <header className="h-12">111</header> */}
 
-      <div className="bg-white h-screen w-screen grid grid-cols-[50px_1fr_50px] grid-rows-[50px_1fr_50px] z-100">
+      <div className="bg-white h-screen w-screen grid grid-cols-[50px_1fr_50px] grid-rows-[50px_1fr_50px] z-100 overflow-hidden">
         <div className="border border-black overflow-hidden bg-orange-600"></div>
         <div className="border border-black overflow-hidden">
           <p className="font-semibold text-6xl">PORT-</p>
