@@ -3,36 +3,70 @@ import * as THREE from "three";
 import { useControls } from "leva";
 import gsap from "gsap";
 import { useThree } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
-import { Edges } from "@react-three/drei";
+import { use, useEffect, useRef, useState } from "react";
+import { Edges, useTexture } from "@react-three/drei";
 
-export default function Model3D() {
+export default function Model3D({ ref, handleOpenDialog }) {
   const pointerRef = useRef();
   const { camera } = useThree();
+  const [initialCamPos, setInitialCamPos] = useState(camera.position.clone());
+  const [zoomToScreen, setZoomToScreen] = useState(false);
 
-  const handleZoom = () => {
-    console.log("zoom");
+  useEffect(() => {
+    const orbitControls = ref.current;
+    const sceneOrigin = new THREE.Vector3(0, 0, 0);
 
-    const targetPos = new THREE.Vector3();
+    if (zoomToScreen) {
+      const targetPos = new THREE.Vector3();
 
-    if (pointerRef.current) {
-      pointerRef.current.updateWorldMatrix(true, false);
-      pointerRef.current.getWorldPosition(targetPos);
+      if (pointerRef.current) {
+        pointerRef.current.updateWorldMatrix(true, false);
+        pointerRef.current.getWorldPosition(targetPos);
+      }
+      const offset = new THREE.Vector3(0, 0, 0.5);
+      const newCamPos = targetPos.clone().add(offset);
 
-      console.log(pointerRef.current.getWorldPosition(targetPos));
+      gsap.to(camera.position, {
+        x: newCamPos.x,
+        y: newCamPos.y,
+        z: newCamPos.z,
+        duration: 1.5,
+        ease: "power2.out",
+        onUpdate: () => orbitControls.update(),
+      });
+
+      gsap.to(orbitControls.target, {
+        x: newCamPos.x,
+        y: newCamPos.y,
+        z: newCamPos.z,
+        duration: 1.5,
+        ease: "power2.out",
+        onUpdate: () => orbitControls.update(),
+      });
+    } else {
+      gsap.to(camera.position, {
+        x: initialCamPos.x,
+        y: initialCamPos.y,
+        z: initialCamPos.z,
+        duration: 1.5,
+        ease: "power2.out",
+        onUpdate: () => orbitControls.update(),
+      });
+
+      gsap.to(orbitControls.target, {
+        x: sceneOrigin.x,
+        y: sceneOrigin.y,
+        z: sceneOrigin.z,
+        duration: 1.5,
+        ease: "power2.out",
+        onUpdate: () => orbitControls.update(),
+      });
     }
-    const offset = new THREE.Vector3(0, 0, 1); // 2 units in front of object
-    const newCamPos = targetPos.clone().add(offset);
+  }, [zoomToScreen]);
 
-    gsap.to(camera.position, {
-      x: newCamPos.x,
-      y: newCamPos.y,
-      z: newCamPos.z,
-      duration: 1.5,
-      ease: "power2.out",
-      onUpdate: () => camera.lookAt(targetPos),
-    });
-  };
+  const handleZoom = () => setZoomToScreen((prev) => !prev);
+
+  // pointer animation
 
   useEffect(() => {
     if (!pointerRef.current) return;
@@ -54,18 +88,28 @@ export default function Model3D() {
     });
   }, [pointerRef]);
 
+  // const texture = useTexture(`${import.meta.env.BASE_URL}instagram.png`);
+
   return (
     <>
-      <VendingMachine scale={2} />
+      <VendingMachine scale={2} handleOpenDialog={handleOpenDialog} />
+      {/* <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+        <planeGeometry args={[2, 2]} />
+        <meshBasicMaterial map={texture} transparent={true} />
+      </mesh> */}
       <mesh
-        position={[0.7, 0.5, 1]}
+        position={[0.73, 0.5, 1]}
         // position={[position.x, position.y, position.z]}
         onClick={handleZoom}
         ref={pointerRef}
       >
-        <circleGeometry args={[0.1, 16]} />
-        <meshStandardMaterial color="white" transparent={true} opacity={0.5} />
-        <Edges color="white" />
+        <circleGeometry args={[0.05, 32]} />
+        <meshStandardMaterial
+          color="#EA580C"
+          transparent={true}
+          opacity={0.5}
+        />
+        <Edges color="#EA580C" />
       </mesh>
     </>
   );
