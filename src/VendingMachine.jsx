@@ -24,16 +24,35 @@ export function VendingMachine(props) {
 
   const { handleOpenDialog } = props;
 
-  const imgPaths = [`${import.meta.env.BASE_URL}instagram.png`];
+  const imgPaths = [
+    `${import.meta.env.BASE_URL}retrogram.png`,
+    `${import.meta.env.BASE_URL}catneed.png`,
+    `${import.meta.env.BASE_URL}fitcommit.png`,
+    `${import.meta.env.BASE_URL}babelbites.png`,
+    `${import.meta.env.BASE_URL}othello.png`,
+  ];
   const textures = useTexture(imgPaths);
 
   const material = new THREE.MeshBasicMaterial({
-    color: "red",
-    // map: textures[0],
-    // transparent: true,
+    // color: "red",
+    map: textures[0],
+    transparent: true,
     side: THREE.DoubleSide,
   });
 
+  const material2 = new THREE.MeshBasicMaterial({
+    // color: "red",
+    map: textures[1],
+    transparent: true,
+    side: THREE.DoubleSide,
+  });
+
+  const material3 = new THREE.MeshBasicMaterial({
+    // color: "red",
+    map: textures[2],
+    transparent: true,
+    side: THREE.DoubleSide,
+  });
   useEffect(() => {
     scene.traverse((child) => {
       if (child.isMesh && child.material === materials.Screen) {
@@ -46,9 +65,12 @@ export function VendingMachine(props) {
 
   useEffect(() => {
     textures.forEach((texture, i) => {
-      // texture.offset.set(0, 0.25); // center
+      texture.minFilter = THREE.LinearMipMapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
       // texture.wrapS = THREE.RepeatWrapping;
       // texture.wrapT = THREE.RepeatWrapping;
+      texture.wrapS = THREE.ClampToEdgeWrapping;
+      texture.wrapT = THREE.ClampToEdgeWrapping;
       texture.flipY = false; // Fix upside-down GLTF UV issue
       texture.encoding = THREE.sRGBEncoding; // Keep correct color space
       texture.needsUpdate = true;
@@ -1307,6 +1329,7 @@ export function VendingMachine(props) {
           receiveShadow
           geometry={nodes.Screen001_2.geometry}
           material={material}
+          onClick={() => handleOpenDialog("virtual-garden")}
         />
         <mesh
           castShadow
@@ -1318,7 +1341,7 @@ export function VendingMachine(props) {
           castShadow
           receiveShadow
           geometry={nodes.Screen002_2.geometry}
-          material={material}
+          material={material2}
         />
         <mesh
           castShadow
@@ -1330,7 +1353,7 @@ export function VendingMachine(props) {
           castShadow
           receiveShadow
           geometry={nodes.Screen003_2.geometry}
-          material={material}
+          material={material3}
         />
         <mesh
           castShadow
@@ -1342,7 +1365,7 @@ export function VendingMachine(props) {
           castShadow
           receiveShadow
           geometry={nodes.Screen004_2.geometry}
-          material={material}
+          // material={material}
         />
         <mesh
           castShadow
@@ -1354,7 +1377,7 @@ export function VendingMachine(props) {
           castShadow
           receiveShadow
           geometry={nodes.Screen005_2.geometry}
-          material={material}
+          // material={material}
         />
         <mesh
           castShadow
@@ -1366,7 +1389,7 @@ export function VendingMachine(props) {
           castShadow
           receiveShadow
           geometry={nodes.Screen006_2.geometry}
-          material={material}
+          // material={material}
         />
         <mesh
           castShadow
