@@ -26,14 +26,14 @@ export function VendingMachine(props) {
 
   const { handleOpenDialog } = props;
 
-  const imgPaths = [
-    `${import.meta.env.BASE_URL}retrogram.png`,
-    `${import.meta.env.BASE_URL}catneed.png`,
-    `${import.meta.env.BASE_URL}fitcommit.png`,
-    `${import.meta.env.BASE_URL}babelbites.png`,
-    `${import.meta.env.BASE_URL}othello.png`,
-  ];
-  const textures = useTexture(imgPaths);
+  // const imgPaths = [
+  //   `${import.meta.env.BASE_URL}retrogram.png`,
+  //   `${import.meta.env.BASE_URL}catneed.png`,
+  //   `${import.meta.env.BASE_URL}fitcommit.png`,
+  //   `${import.meta.env.BASE_URL}babelbites.png`,
+  //   `${import.meta.env.BASE_URL}othello.png`,
+  // ];
+  // const textures = useTexture(imgPaths);
 
   // const material = new THREE.MeshBasicMaterial({
   //   // color: "red",
@@ -56,19 +56,19 @@ export function VendingMachine(props) {
   //   side: THREE.DoubleSide,
   // });
 
-  useEffect(() => {
-    textures.forEach((texture, i) => {
-      texture.minFilter = THREE.LinearMipMapLinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      // texture.wrapS = THREE.RepeatWrapping;
-      // texture.wrapT = THREE.RepeatWrapping;
-      texture.wrapS = THREE.ClampToEdgeWrapping;
-      texture.wrapT = THREE.ClampToEdgeWrapping;
-      texture.flipY = false; // Fix upside-down GLTF UV issue
-      texture.encoding = THREE.sRGBEncoding; // Keep correct color space
-      texture.needsUpdate = true;
-    });
-  }, [textures]);
+  // useEffect(() => {
+  //   textures.forEach((texture, i) => {
+  //     texture.minFilter = THREE.LinearMipMapLinearFilter;
+  //     texture.magFilter = THREE.LinearFilter;
+  //     // texture.wrapS = THREE.RepeatWrapping;
+  //     // texture.wrapT = THREE.RepeatWrapping;
+  //     texture.wrapS = THREE.ClampToEdgeWrapping;
+  //     texture.wrapT = THREE.ClampToEdgeWrapping;
+  //     texture.flipY = false; // Fix upside-down GLTF UV issue
+  //     texture.encoding = THREE.sRGBEncoding; // Keep correct color space
+  //     texture.needsUpdate = true;
+  //   });
+  // }, [textures]);
 
   let screenMeshCount = 0;
 
@@ -103,6 +103,33 @@ export function VendingMachine(props) {
             material={materials.Main}
           />
         </group>
+        {Object.entries(nodes).map(([key, node]) => {
+          if (!node.geometry || !key.includes("Row")) return null;
+
+          console.log(key.includes("Row"), key);
+
+          const index = parseInt(key.slice(3, 5)) - 1;
+          console.log("index", index);
+
+          const material =
+            index >= projectsArray.length
+              ? node.material
+              : new THREE.MeshBasicMaterial({ color: colors[index] });
+
+          return (
+            <mesh
+              key={key}
+              geometry={node.geometry}
+              material={material}
+              // material={node.material}
+              position={node.position}
+              rotation={node.rotation}
+              scale={node.scale}
+              castShadow
+              receiveShadow
+            />
+          );
+        })}
         <mesh
           castShadow
           receiveShadow
@@ -112,7 +139,7 @@ export function VendingMachine(props) {
           rotation={[-1.309, 0, 0]}
           scale={[0.5, 1, 0.5]}
         />
-        <mesh
+        {/* {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Row01_Plane004.geometry}
@@ -120,7 +147,7 @@ export function VendingMachine(props) {
           position={[0.395, 0.579, 0.122]}
           rotation={[-1.309, 0, 0]}
           scale={[0.5, 1, 0.5]}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
@@ -174,7 +201,7 @@ export function VendingMachine(props) {
           position={[0.398, 0.579, -0.238]}
           rotation={[-1.309, 0, 0]}
           scale={[0.5, 1, 0.5]}
-        />
+        />{" "}
         <mesh
           castShadow
           receiveShadow
@@ -1297,7 +1324,6 @@ export function VendingMachine(props) {
           geometry={nodes.Screen001_1.geometry}
           material={materials.Shelves}
         />
-
         {/* <mesh
           castShadow
           receiveShadow
@@ -1305,7 +1331,6 @@ export function VendingMachine(props) {
           material={material}
           onClick={() => handleOpenDialog("virtual-garden")}
         /> */}
-
         {Object.entries(nodes).map(([key, node]) => {
           if (!node.geometry || !node.material.name.includes("Screen"))
             return null;
@@ -1313,11 +1338,16 @@ export function VendingMachine(props) {
           const index = screenMeshCount;
           screenMeshCount += 1;
 
+          const material =
+            index >= projectsArray.length
+              ? node.material
+              : new THREE.MeshBasicMaterial({ color: colors[index] });
+
           return (
             <mesh
               key={key}
               geometry={node.geometry}
-              material={new THREE.MeshBasicMaterial({ color: colors[index] })}
+              material={material}
               // material={node.material}
               userData={{ index, projectName: projectsArray[index] }}
               castShadow
@@ -1325,7 +1355,6 @@ export function VendingMachine(props) {
               onClick={(event) => {
                 event.stopPropagation();
                 const mesh = event.object;
-                console.log("Clicked mesh:", mesh.userData);
                 handleOpenDialog(mesh.userData.projectName);
               }}
             />
@@ -1361,156 +1390,156 @@ export function VendingMachine(props) {
           geometry={nodes.Screen004_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen004_2.geometry}
           // material={material}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen005_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen005_2.geometry}
           // material={material}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen006_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen006_2.geometry}
           // material={material}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen007_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen007_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen008_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen008_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen009_1.geometry}
           material={materials.Plate}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen009_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen010_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen010_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen011_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen011_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen012_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen012_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen013_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen013_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen014_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen014_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen015_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen015_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen016_1.geometry}
           material={materials.Shelves}
         />
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Screen016_2.geometry}
           material={materials.Screen}
-        />
+        /> */}
       </group>
     </group>
   );

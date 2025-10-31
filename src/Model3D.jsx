@@ -103,9 +103,13 @@ export default function Model3D({ ref, handleOpenDialog }) {
         onClick={handleZoom}
         ref={pointerRef}
       >
-        <circleGeometry args={[0.05, 16]} />
-        <meshStandardMaterial color="white" transparent={true} opacity={0.5} />
-        <Edges color="white" />
+        <circleGeometry args={[0.05, 32]} />
+        <meshStandardMaterial
+          color="#EA580C"
+          transparent={true}
+          opacity={0.5}
+        />
+        <Edges color="#EA580C" />
       </mesh>
     </>
   );

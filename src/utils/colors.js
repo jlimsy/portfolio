@@ -1,3 +1,10 @@
-const colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0x00ffff, 0xff00ff];
+const colors = [
+  "#3333CB",
+  "#FF96D3",
+  "#00DDB5",
+  "#FFC41D",
+  "#E44C10",
+  "#DBFF08",
+];
 
 export default colors;
