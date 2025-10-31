@@ -29,7 +29,18 @@ function App() {
             JOEY
           </p>
         </div>{" "}
-        <div className="border border-black "></div>{" "}
+        <div className="border border-black ">
+          <div className="font-mono p-4 ">
+            <p className="text-xs">
+              Hold + drag to{" "}
+              <span className="text-xs font-bold leading-none">rotate</span>
+            </p>
+            <p className="text-xs">
+              Two fingers or scroll to{" "}
+              <span className="text-xs font-bold leading-none">zoom</span>{" "}
+            </p>
+          </div>
+        </div>{" "}
         <div className="border border-black">
           <p className="rotate-90 text-6xl  -translate-x-1 translate-y-96">
             FOLIO
