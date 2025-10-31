@@ -63,10 +63,10 @@ export default function Canvas3D() {
               <img
                 src={selectedProject.img}
                 alt={selectedProject.name}
-                className="w-48 md:w-96 border border-border"
+                className="w-96 border border-border"
               />
 
-              <div className="w-48 md:w-96">
+              <div className="w-96">
                 <p> {selectedProject.description}</p>
               </div>
 
