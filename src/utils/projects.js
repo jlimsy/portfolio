@@ -9,40 +9,40 @@ const projects = [
   {
     id: "retrogram",
     name: "Retrogram",
-    img: "",
+    img: "retrogram.png",
     description: "",
     skills: ["javascript", "html", "css"],
   },
   {
     id: "catneed",
     name: "catneed",
-    img: "",
+    img: "catneed.png",
     description: "",
     skills: ["javascript", "html", "css"],
   },
   {
     id: "babelbites",
     name: "babelbites",
-    img: "",
+    img: "babelbites.png",
     description: "",
     skills: ["javascript", "html", "css"],
   },
   {
     id: "fitcommit",
     name: "fitcommit",
-    img: "",
+    img: "fitcommit.png",
     description: "",
     skills: ["javascript", "html", "css"],
   },
   {
     id: "othello",
     name: "Othello",
-    img: "",
+    img: "othello.png",
     description: "",
     skills: ["javascript", "html", "css"],
   },
 ];
 
-const projectArray = projects.map((proj) => proj.id);
+const projectsArray = projects.map((proj) => proj.id);
 
-export default projects;
+export { projects, projectsArray };

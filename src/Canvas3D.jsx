@@ -9,6 +9,7 @@ import Model3D from "./Model3D";
 import { useRef, useState } from "react";
 import * as THREE from "three";
 
+import { projects, projectsArray } from "./utils/projects";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +22,8 @@ import { Badge } from "@/Components/ui/badge";
 
 export default function Canvas3D() {
   const [openDialog, setOpenDialog] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+
   const OrbitControlsRef = useRef();
 
   // ********** START: Leva GUI **********
@@ -35,9 +38,13 @@ export default function Canvas3D() {
 
   // ********** END: Leva GUI **********
 
-  const handleOpenDialog = () => {
-    console.log("open dialog");
+  const handleOpenDialog = (projectId) => {
+    const project = projects.find((project) => project.id === projectId);
+
+    if (!project) return;
+
     setOpenDialog(true);
+    setSelectedProject(project);
   };
 
   return (
@@ -51,18 +58,18 @@ export default function Canvas3D() {
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Project Name</DialogTitle>
+                <DialogTitle>{selectedProject.name}</DialogTitle>
               </DialogHeader>
               <img
-                src=""
-                alt="Project Screenshot"
+                src={selectedProject.img}
+                alt={selectedProject.name}
                 className="h-48 border border-border"
               />
-              Project description goes here.
+              {selectedProject.description}
               <div className="flex gap-1">
-                <Badge>Skill</Badge>
-                <Badge>Skill</Badge>
-                <Badge>Skill</Badge>
+                {selectedProject.skills.map((skill) => (
+                  <Badge key={skill}>{skill}</Badge>
+                ))}
               </div>
             </DialogContent>
           </Dialog>
